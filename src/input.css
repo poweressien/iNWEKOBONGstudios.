@@ -1,0 +1,81 @@
+@import "tailwindcss";
+@source "../index.html";
+@source "../assets/js/store.js";
+@source "../assets/js/views.js";
+@source "../assets/js/manage.js";
+@source "../assets/js/main.js";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Palette sampled from the iNWEKOBONG logo artwork — nothing else is used. */
+  --color-white: #f2f6f5;        /* logo white */
+  --color-black: #0a0e12;        /* logo near-black */
+  --color-ink: #f2f6f5;
+  --color-paper: #0a0e12;
+  --color-paper-dark: #0a0e12;
+
+  --color-grey-50: #f2f6f5;
+  --color-grey-100: #e7ebee;
+  --color-grey-300: #c4cdca;     /* logo stroke white */
+  --color-grey-500: #95999a;     /* muted text: logo white @ 60% on near-black */
+  --color-grey-700: #26393f;     /* logo slate */
+  --color-grey-900: #122d25;     /* logo deep green */
+
+  --color-brand-400: #2cf99e;    /* logo neon highlight */
+  --color-brand-500: #2ee48b;    /* logo neon green */
+  --color-brand-600: #15da7e;
+  --color-brand-700: #29684a;    /* logo grid-line green */
+}
+
+html { color-scheme: dark; background: #0a0e12; }
+::selection { background: #2ee48b; color: #0a0e12; }
+
+/* Page backdrop: the radar rings + crosshair from the artwork */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(46,228,139,.10), transparent 70%),
+    linear-gradient(to right, transparent calc(50% - .5px), rgba(46,228,139,.07) calc(50% - .5px) calc(50% + .5px), transparent calc(50% + .5px)),
+    repeating-radial-gradient(circle at 50% 38vh, transparent 0 139px, rgba(46,228,139,.06) 139px 140px);
+}
+
+/* Neon-green buttons carry near-black text, like the artwork */
+.bg-brand-500.text-white { color: #0a0e12; box-shadow: 0 0 22px -6px rgba(46,228,139,.7); }
+.bg-brand-500.text-white:hover { box-shadow: 0 0 26px -4px rgba(44,249,158,.85); }
+
+/* Cards get the artwork's green edge-glow on hover */
+.group { background: linear-gradient(180deg, rgba(18,45,37,.28), rgba(10,14,18,0)); }
+.group:hover { box-shadow: 0 0 0 1px rgba(46,228,139,.35), 0 0 30px -8px rgba(46,228,139,.45); }
+h1, h2 { text-shadow: 0 0 28px rgba(46,228,139,.18); }
+header { box-shadow: 0 1px 0 rgba(46,228,139,.12), 0 8px 30px -18px rgba(46,228,139,.35); }
+footer { border-top-color: rgba(46,228,139,.18) !important; }
+input:focus, textarea:focus, select:focus { box-shadow: 0 0 0 3px rgba(46,228,139,.18); }
+
+/* Hero — the full logo artwork, feathered into the page */
+.hero-img {
+  display: block; width: auto; max-width: 100%; height: min(88vh, 780px); object-fit: contain;
+  -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 58%, transparent 100%);
+  mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 58%, transparent 100%);
+}
+@media (max-width: 640px) { .hero-img { height: auto; width: 100%; } }
+
+/* Rendered Markdown (blog posts, About page) */
+.md > :first-child { margin-top: 0; }
+.md p, .md ul, .md ol, .md pre, .md blockquote, .md table { margin-top: 1rem; }
+.md h1, .md h2, .md h3 { font-family: var(--font-display); font-weight: 700; color: var(--color-ink); margin-top: 2rem; }
+.md h1 { font-size: 1.5rem; } .md h2 { font-size: 1.25rem; } .md h3 { font-size: 1.1rem; }
+.dark .md h1, .dark .md h2, .dark .md h3 { color: var(--color-grey-50); }
+.md ul { list-style: disc; padding-left: 1.25rem; } .md ol { list-style: decimal; padding-left: 1.25rem; }
+.md a { color: var(--color-brand-600); text-decoration: underline; }
+.md img { max-width: 100%; border-radius: .5rem; margin-top: 1rem; }
+.md code { font-family: var(--font-mono); font-size: .875em; background: var(--color-grey-50); padding: .1rem .3rem; border-radius: .25rem; }
+.dark .md code { background: var(--color-grey-900); }
+.md pre { background: var(--color-grey-900); color: var(--color-grey-100); padding: 1rem; border-radius: .5rem; overflow-x: auto; }
+.md pre code { background: transparent; padding: 0; }
+.md blockquote { border-left: 3px solid var(--color-brand-500); padding-left: 1rem; color: var(--color-grey-500); }
+.md table { border-collapse: collapse; } .md th, .md td { border: 1px solid var(--color-grey-300); padding: .35rem .6rem; }
